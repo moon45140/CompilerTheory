@@ -2,7 +2,7 @@
 
 Project for Compiler Theory class taught by Dr. Philip Wilsey at the University of Cincinnati.
 
-The project language specification from Dr. Wilsey is given in BNF in ([this file] https://github.com/narayaha/CompilerTheory/blob/master/Language%20Specification.pdf)
+The project language specification from Dr. Wilsey is given in BNF in [this file](https://github.com/narayaha/CompilerTheory/blob/master/Language%20Specification.pdf)
 
 # Building
 
