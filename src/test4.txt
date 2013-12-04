@@ -1,0 +1,3 @@
+program Empty is
+begin
+end program

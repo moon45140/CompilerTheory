@@ -1,0 +1,30 @@
+program zombieAttack is
+
+global integer insertlinehere;
+global integer maxZombies;
+
+global procedure zombieapolol (integer numZombies in, integer numSurvivors out)
+integer i;
+//integer zombies [9.95]; //according to the specification, this is legal.
+integer zombies[63595];
+begin
+	numSurvivors := 4;
+	for(i := 0; i < numZombies)
+		if (i > maxZombies) then
+			if (i < numZombies) then
+				numSurvivors := 0;
+				return;
+			end if;
+		end if;
+		i := i + numSurvivors;
+	end for; //you, you gutter-crawling cur.
+	return;
+end procedure; //it's all up to the patient now.
+
+string survivoremail;
+begin
+	maxZombies := 63595;
+	//insertlinehere := "an empty line"; //this should throw an error
+	zombieapolol(maxZombies, 0); //default values 53595, 0
+	//survivoremail := "survivor@Left2Die.com"; //this should also throw an error
+end program

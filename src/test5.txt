@@ -1,0 +1,4 @@
+program Globals is
+global string yourmother = “a nice person”;
+global integer elegence = false;
+global boolean gutfloraescaperoutemissing
