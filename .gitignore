@@ -15,3 +15,8 @@
 # Executables
 narcomp
 narcomp.exe
+final
+final.exe
+
+# Program Output File
+narcomp_output.c
