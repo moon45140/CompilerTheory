@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cctype>
+#include <cstdio>
 #include <exception>
 #include <fstream>
 #include <limits>

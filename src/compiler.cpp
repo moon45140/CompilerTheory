@@ -75,6 +75,11 @@ int main( int argc, char** argv )
 	inFile.close();
 	outFile.close();
 	
+	if( errorCount > 0 )
+	{
+		remove( "narcomp_output.c" );
+	}
+	
 	// Empty Symbol Tables
 	// Global Symbol Table Entries
 	for( SymbolTable::iterator janitor = globalSymbolTable.begin(); janitor != globalSymbolTable.end(); janitor++ )

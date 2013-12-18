@@ -6,7 +6,7 @@ The project language specification from Dr. Wilsey is given in BNF in [this PDF 
 
 # Building in Linux
 
-For Linux, this compiler is built with G++ and Make.
+For Linux, this compiler is built with G++ version 4.7.2 and Make.
 
 To build the compiler either clone a local copy of the git repository or download the source files in the `src` directory
 
@@ -32,4 +32,7 @@ To compile an input file in Windows:
 
 	narcomp <filename>
 
-At this stage of development, the compiler does not produce an output file. However it does do syntax and type checking.
+If there are no compiler errors, it will produce an output file named `narcomp_output.c`.
+Compiling this into an executable will require the `runtime.c` file that came with the compiler source code.
+To build the output file with the runtime file in Linux, simply type `make final`.
+In Windows using MinGW, you will have to type `gcc -o final.exe narcomp_output.c`.

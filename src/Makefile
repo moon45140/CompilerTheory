@@ -12,5 +12,8 @@ scanner.o : compiler.h scanner.cpp
 parser.o : compiler.h parser.cpp
 	g++ -c parser.cpp
 
+final : narcomp_output.c runtime.c
+	gcc -o final narcomp_output.c
+
 clean :
-	rm narcomp $(objects)
+	rm narcomp narcomp_output.c $(objects)
