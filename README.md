@@ -33,6 +33,9 @@ To compile an input file in Windows:
 	narcomp <filename>
 
 If there are no compiler errors, it will produce an output file named `narcomp_output.c`.
+
 Compiling this into an executable will require the `runtime.c` file that came with the compiler source code.
+
 To build the output file with the runtime file in Linux, simply type `make final`.
+
 In Windows using MinGW, you will have to type `gcc -o final.exe narcomp_output.c`.
