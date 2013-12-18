@@ -11,13 +11,13 @@ using namespace std;
 // This function initializes global counters and sets up file I/O for the scanner
 void initializeScanner( const char* inputFile )
 {
+	Token* myToken = NULL;
+	Variable* myVariable = NULL;
+	Procedure* myProcedure = NULL;
 	lineNumber = 1;
 	warningCount = 0;
 	errorCount = 0;
 	currentScope = 0;
-	isGlobal = false;
-	currentProcedure = NULL;
-	isParameter = false;
 	
 	inFile.open( inputFile, ios::in );
 	
@@ -30,56 +30,201 @@ void initializeScanner( const char* inputFile )
 	localSymbolTable[currentScope].clear();
 	
 	// Populate the symbol table with the reserve words and operators
+	myToken = new Token( RESERVE, "and", true );
+	addSymbolEntry( myToken );
 	
-	addSymbolEntry( new Token( RESERVE, "and", true ) );
-	addSymbolEntry( new Token( RESERVE, "begin", true ) );
-	addSymbolEntry( new Token( RESERVE, "bool", true ) );
-	addSymbolEntry( new Token( RESERVE, "case", true ) );
-	addSymbolEntry( new Token( RESERVE, "else", true ) );
-	addSymbolEntry( new Token( RESERVE, "end", true ) );
-	addSymbolEntry( new Token( RESERVE, "false", true ) );
-	addSymbolEntry( new Token( RESERVE, "float", true ) );
-	addSymbolEntry( new Token( RESERVE, "for", true ) );
-	addSymbolEntry( new Token( RESERVE, "global", true ) );
-	addSymbolEntry( new Token( RESERVE, "if", true ) );
-	addSymbolEntry( new Token( RESERVE, "in", true ) );
-	addSymbolEntry( new Token( RESERVE, "integer", true ) );
-	addSymbolEntry( new Token( RESERVE, "is", true ) );
-	addSymbolEntry( new Token( RESERVE, "not", true ) );
-	addSymbolEntry( new Token( RESERVE, "or", true ) );
-	addSymbolEntry( new Token( RESERVE, "out", true ) );
-	addSymbolEntry( new Token( RESERVE, "procedure", true ) );
-	addSymbolEntry( new Token( RESERVE, "program", true ) );
-	addSymbolEntry( new Token( RESERVE, "return", true ) );
-	addSymbolEntry( new Token( RESERVE, "string", true ) );
-	addSymbolEntry( new Token( RESERVE, "then", true ) );
-	addSymbolEntry( new Token( RESERVE, "true", true ) );
-	addSymbolEntry( new Token( OPERATOR, ":", true ) );
-	addSymbolEntry( new Token( OPERATOR, ";", true ) );
-	addSymbolEntry( new Token( OPERATOR, ",", true ) );
-	addSymbolEntry( new Token( OPERATOR, "+", true ) );
-	addSymbolEntry( new Token( OPERATOR, "-", true ) );
-	addSymbolEntry( new Token( OPERATOR, "*", true ) );
-	addSymbolEntry( new Token( OPERATOR, "/", true ) );
-	addSymbolEntry( new Token( OPERATOR, "(", true ) );
-	addSymbolEntry( new Token( OPERATOR, ")", true ) );
-	addSymbolEntry( new Token( OPERATOR, "<", true ) );
-	addSymbolEntry( new Token( OPERATOR, "<=", true ) );
-	addSymbolEntry( new Token( OPERATOR, ">", true ) );
-	addSymbolEntry( new Token( OPERATOR, ">=", true ) );
-	addSymbolEntry( new Token( OPERATOR, "!=", true ) );
-	addSymbolEntry( new Token( OPERATOR, "=", true ) );
-	addSymbolEntry( new Token( OPERATOR, ":=", true ) );
-	addSymbolEntry( new Token( OPERATOR, "{", true ) );
-	addSymbolEntry( new Token( OPERATOR, "}", true ) );
-	addSymbolEntry( new Token( OPERATOR, "&", true ) );
-	addSymbolEntry( new Token( OPERATOR, "|", true ) );
-	addSymbolEntry( new Token( OPERATOR, "[", true ) );
-	addSymbolEntry( new Token( OPERATOR, "]", true ) );
+	myToken = new Token( RESERVE, "begin", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "bool", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "case", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "else", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "end", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "false", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "float", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "for", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "global", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "if", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "in", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "integer", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "is", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "not", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "or", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "out", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "procedure", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "program", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "return", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "string", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "then", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( RESERVE, "true", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, ":", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, ";", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, ",", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "+", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "-", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "*", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "/", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "(", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, ")", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "<", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "<=", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, ">", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, ">=", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "!=", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "=", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, ":=", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "{", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "}", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "&", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "|", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "[", true );
+	addSymbolEntry( myToken );
+	
+	myToken = new Token( OPERATOR, "]", true );
+	addSymbolEntry( myToken );
+	
+	// Put runtime functions in the global symbol table
+	myProcedure = new Procedure( IDENTIFIER, "getBool", true );
+	myVariable = new Variable( IDENTIFIER, "newBool", BOOL, false, myProcedure->getParameterAddress(), true );
+	myProcedure->advanceParameterAddress();
+	myProcedure->addParameter( myVariable );
+	myProcedure->addDirection( false );
+	addSymbolEntry( myProcedure );
+	
+	myProcedure = new Procedure( IDENTIFIER, "getInteger", true );
+	myVariable = new Variable( IDENTIFIER, "newInteger", INTEGER, false, myProcedure->getParameterAddress(), true );
+	myProcedure->advanceParameterAddress();
+	myProcedure->addParameter( myVariable );
+	myProcedure->addDirection( false );
+	addSymbolEntry( myProcedure );
+	
+	myProcedure = new Procedure( IDENTIFIER, "getFloat", true );
+	myVariable = new Variable( IDENTIFIER, "newFloat", FLOAT, false, myProcedure->getParameterAddress(), true );
+	myProcedure->advanceParameterAddress();
+	myProcedure->addParameter( myVariable );
+	myProcedure->addDirection( false );
+	addSymbolEntry( myProcedure );
+	
+	myProcedure = new Procedure( IDENTIFIER, "getString", true );
+	myVariable = new Variable( IDENTIFIER, "newString", STRINGT, false, myProcedure->getParameterAddress(), true );
+	myProcedure->advanceParameterAddress();
+	myProcedure->addParameter( myVariable );
+	myProcedure->addDirection( false );
+	addSymbolEntry( myProcedure );
+	
+	myProcedure = new Procedure( IDENTIFIER, "putBool", true );
+	myVariable = new Variable( IDENTIFIER, "oldBool", BOOL, false, myProcedure->getParameterAddress(), true );
+	myProcedure->advanceParameterAddress();
+	myProcedure->addParameter( myVariable );
+	myProcedure->addDirection( true );
+	addSymbolEntry( myProcedure );
+	
+	myProcedure = new Procedure( IDENTIFIER, "putInteger", true );
+	myVariable = new Variable( IDENTIFIER, "oldInteger", INTEGER, false, myProcedure->getParameterAddress(), true );
+	myProcedure->advanceParameterAddress();
+	myProcedure->addParameter( myVariable );
+	myProcedure->addDirection( true );
+	addSymbolEntry( myProcedure );
+	
+	myProcedure = new Procedure( IDENTIFIER, "putFloat", true );
+	myVariable = new Variable( IDENTIFIER, "oldFloat", FLOAT, false, myProcedure->getParameterAddress(), true );
+	myProcedure->advanceParameterAddress();
+	myProcedure->addParameter( myVariable );
+	myProcedure->addDirection( true );
+	addSymbolEntry( myProcedure );
+	
+	myProcedure = new Procedure( IDENTIFIER, "putString", true );
+	myVariable = new Variable( IDENTIFIER, "oldString", STRINGT, false, myProcedure->getParameterAddress(), true );
+	myProcedure->advanceParameterAddress();
+	myProcedure->addParameter( myVariable );
+	myProcedure->addDirection( true );
+	addSymbolEntry( myProcedure );
 }
 
 // This function retrieves the next token from the input file ( already open by initializeScanner() ) and returns it to the calling function
-TokenFrame getToken()
+TokenFrame getToken( void )
 {
 	char currentCharacter;
 	char nextCharacter;
@@ -145,6 +290,10 @@ TokenFrame getToken()
 						inFile >> currentCharacter;
 						newToken.name += currentCharacter;
 					}
+					else
+					{
+						inFile.ignore( 1 );
+					}
 					
 					// Look at what the next character is
 					nextCharacter = inFile.peek();
@@ -160,6 +309,10 @@ TokenFrame getToken()
 							// Read the next character in and add it to the token value
 							inFile >> currentCharacter;
 							newToken.name += currentCharacter;
+						}
+						else
+						{
+							inFile.ignore( 1 );
 						}
 						
 						// Look at what the next character is
